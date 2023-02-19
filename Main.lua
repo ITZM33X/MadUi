@@ -1,4 +1,4 @@
-local UIVersion = "0.3.4"
+local UIVersion = "0.3.5"
 local mouse = game.Players.LocalPlayer:GetMouse()	
 local uis = game:GetService("UserInputService")
 local open = true
