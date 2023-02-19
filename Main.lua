@@ -1,6 +1,4 @@
-local UIVersion = "0.3.5"
-local mouse = game.Players.LocalPlayer:GetMouse()	
-local uis = game:GetService("UserInputService")
+local tweenservice = game:GetService("TweenService")
 local open = true
 
 
@@ -356,6 +354,47 @@ function Lib:CreateMain(Name)
 			
 			ButtonElementTrigger.MouseButton1Click:Connect(function()
 				pcall(Call)
+				local success, error = pcall(Call)
+				
+				if success then				
+					local goal = {}
+					goal.ImageColor3 = Color3.fromRGB(29, 255, 67)
+					
+					local goal2 = {}
+					goal2.ImageColor3 = Color3.fromRGB(255, 255, 255)
+					
+					
+					local tweeninfo = TweenInfo.new(0.3)
+					
+					local tweenGiveColor = tweenservice:Create(ImageLabel, tweeninfo, goal)
+					local tweenNormalColor = tweenservice:Create(ImageLabel, tweeninfo, goal2)
+					
+					tweenGiveColor:Play()
+					
+					tweenGiveColor.Completed:Connect(function()
+						tweenNormalColor:Play()
+					end)
+				else
+					warn(error)
+					
+					local goal = {}
+					goal.ImageColor3 = Color3.fromRGB(255, 29, 67)
+
+					local goal2 = {}
+					goal2.ImageColor3 = Color3.fromRGB(255, 255, 255)
+
+
+					local tweeninfo = TweenInfo.new(0.3)
+
+					local tweenGiveColor = tweenservice:Create(ImageLabel, tweeninfo, goal)
+					local tweenNormalColor = tweenservice:Create(ImageLabel, tweeninfo, goal2)
+
+					tweenGiveColor:Play()
+
+					tweenGiveColor.Completed:Connect(function()
+						tweenNormalColor:Play()
+					end)
+				end
 			end)
 		end
 		
@@ -477,6 +516,7 @@ function Lib:CreateMain(Name)
 			ToggleText_3.FocusLost:Connect(function(EnterPressed)
 				if EnterPressed then
 					pcall(Call, ToggleText_3.Text)
+					ToggleText_3.Text = ""
 				end
 			end)
 			
@@ -826,7 +866,5 @@ function Lib:CreateMain(Name)
 	
 	return Tab
 end
-
-
 
 return Lib
