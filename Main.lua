@@ -1,3 +1,6 @@
+local UIVersion = "0.3.6"
+local mouse = game.Players.LocalPlayer:GetMouse()	
+local uis = game:GetService("UserInputService")
 local tweenservice = game:GetService("TweenService")
 local open = true
 
@@ -866,5 +869,6 @@ function Lib:CreateMain(Name)
 	
 	return Tab
 end
+
 
 return Lib
