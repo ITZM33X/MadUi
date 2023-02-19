@@ -1,4 +1,4 @@
-local UIVersion = "0.3.6"
+local UIVersion = "0.3.7"
 local mouse = game.Players.LocalPlayer:GetMouse()	
 local uis = game:GetService("UserInputService")
 local tweenservice = game:GetService("TweenService")
@@ -26,6 +26,8 @@ function Lib:CreateMain(Name)
 	local TabHolder = Instance.new("Frame")
 	local TabHolderPadding = Instance.new("UIPadding")
 	local TabHolderLayout = Instance.new("UIListLayout")
+	
+	
 	
 	if game.CoreGui:FindFirstChild("MadUI") then
 		game.CoreGui.MadUI:Destroy()
@@ -101,7 +103,7 @@ function Lib:CreateMain(Name)
 				Main:TweenPosition(UDim2.new(-0.25, 0,0.5, 0),
 					Enum.EasingDirection.Out,
 					Enum.EasingStyle.Sine,
-					0.3,
+					0.2,
 					true
 				)
 			else
@@ -109,17 +111,22 @@ function Lib:CreateMain(Name)
 				Main:TweenPosition(UDim2.new(0.5, 0,0.5, 0),
 					Enum.EasingDirection.Out,
 					Enum.EasingStyle.Sine,
-					0.3,
+					0.2,
 					true
 				)
 			end
 		end
 	end)
-
+	
+	
+	
+	
+	
 	TopBarCorner.CornerRadius = UDim.new(0.100000001, 0)
 	TopBarCorner.Name = "TopBarCorner"
 	TopBarCorner.Parent = TopBar
-
+	
+	
 	Navigation.Name = "Navigation"
 	Navigation.Parent = Main
 	Navigation.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
@@ -356,7 +363,6 @@ function Lib:CreateMain(Name)
 			end)
 			
 			ButtonElementTrigger.MouseButton1Click:Connect(function()
-				pcall(Call)
 				local success, error = pcall(Call)
 				
 				if success then				
@@ -869,6 +875,5 @@ function Lib:CreateMain(Name)
 	
 	return Tab
 end
-
 
 return Lib
