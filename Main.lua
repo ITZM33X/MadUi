@@ -1,8 +1,34 @@
-local UIVersion = "0.3.7"
+local UIVersion = "0.3.8"
 local mouse = game.Players.LocalPlayer:GetMouse()	
 local uis = game:GetService("UserInputService")
 local tweenservice = game:GetService("TweenService")
 local open = true
+
+function Init()
+	spawn(function()
+		wait(0.3)
+		local script = Instance.new("LocalScript")
+
+		local gui = game.CoreGui.MadUI
+		local tabs = gui.Main.TabHolder
+		local navigation = gui.Main.Navigation
+
+		local firstPage
+
+		for i,v in pairs(tabs:GetChildren()) do
+			if i == 1 then
+				firstPage = v
+				v.Visible = true
+			else
+				v.Visible = false
+			end
+		end		
+
+		local pb = navigation.ButtonHolder:FindFirstChild(firstPage.Name.."Btn")
+		pb.BackgroundColor3 = Color3.fromRGB(255, 120, 0)
+		pb.ButtonHolderElementEdge.BackgroundColor3 = Color3.fromRGB(255, 120, 0)	
+	end)
+end
 
 
 local Lib = {}
@@ -27,14 +53,7 @@ function Lib:CreateMain(Name)
 	local TabHolderPadding = Instance.new("UIPadding")
 	local TabHolderLayout = Instance.new("UIListLayout")
 	
-	
-	
-	if game.CoreGui:FindFirstChild("MadUI") then
-		game.CoreGui.MadUI:Destroy()
-	end
-	
 	MadUI.Name = "MadUI"
-	MadUI.Parent = game.CoreGui
 	MadUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"
@@ -204,8 +223,11 @@ function Lib:CreateMain(Name)
 	TabHolder.Position = UDim2.new(0.239999995, 0, 0.0975164771, 0)
 	TabHolder.Size = UDim2.new(0.759673178, 0, 0.898483694, 0)
 	
+	
+	local firstPage
+	
 	local Tab = {}
-	function Tab:CreateTab(Name)
+	function Tab:CreateTab(Name)	
 		local TabHolderTabElement = Instance.new("ScrollingFrame")
 		local TabHolderPadding = Instance.new("UIPadding")
 		local TabHolderLayout = Instance.new("UIListLayout")
@@ -242,6 +264,10 @@ function Lib:CreateMain(Name)
 		ButtonHolderElement.BackgroundColor3 = Color3.fromRGB(57, 57, 57)
 		ButtonHolderElement.Position = UDim2.new(-3.38150983e-07, 0, 0.105000019, 0)
 		ButtonHolderElement.Size = UDim2.new(0.877995789, 0, 0.100000001, 0)
+		
+		if firstPage == nil then
+			firstPage = ButtonHolderElement
+		end
 
 		ElementUiCorne.CornerRadius = UDim.new(0, 10)
 		ElementUiCorne.Name = "ElementUiCorne"
@@ -254,7 +280,7 @@ function Lib:CreateMain(Name)
 		ButtonHolderElementEdge.Position = UDim2.new(-0.800000012, 0, 0, 0)
 		ButtonHolderElementEdge.Size = UDim2.new(0.908738852, 0, 1, 0)
 
-		ButtonHolderPage.Name = "ButtonHolderPage"
+		ButtonHolderPage.Name = Name.."Page"
 		ButtonHolderPage.Parent = ButtonHolderElement
 		ButtonHolderPage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		ButtonHolderPage.BackgroundTransparency = 1.000
@@ -871,9 +897,17 @@ function Lib:CreateMain(Name)
 		return Elements
 	end
 	
+	if game.CoreGui:FindFirstChild("MadUI") then
+		game.CoreGui.MadUI:Destroy()
+	end
+	
+	MadUI.Parent = game.CoreGui
 	
 	
 	return Tab
 end
 
+
+
+Init()
 return Lib
