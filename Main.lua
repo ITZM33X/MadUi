@@ -1,4 +1,4 @@
-local UIVersion = "0.3.9"
+local UIVersion = "0.3.10"
 local mouse = game.Players.LocalPlayer:GetMouse()	
 local uis = game:GetService("UserInputService")
 local tweenservice = game:GetService("TweenService")
@@ -8,8 +8,8 @@ function Init()
 	spawn(function()
 		wait(0.3)
 		local script = Instance.new("LocalScript")
-
-		local gui = game.CoreGui.MadUI
+		
+		local gui = game.CoreGui:WaitForChild("MadUI")
 		local tabs = gui.Main.TabHolder
 		local navigation = gui.Main.Navigation
 
