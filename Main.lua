@@ -1,4 +1,4 @@
-local UIVersion = "0.3.10"
+local UIVersion = "0.4.0"
 local mouse = game.Players.LocalPlayer:GetMouse()	
 local uis = game:GetService("UserInputService")
 local tweenservice = game:GetService("TweenService")
@@ -7,7 +7,6 @@ local open = true
 function Init()
 	spawn(function()
 		wait(0.3)
-		local script = Instance.new("LocalScript")
 		
 		local gui = game.CoreGui:WaitForChild("MadUI")
 		local tabs = gui.Main.TabHolder
@@ -314,7 +313,6 @@ function Lib:CreateMain(Name)
 			for i,v in pairs(TabHolder:GetChildren()) do
 				if v.Name == Name then
 					v.Visible = true
-					print("jgfjgjfd")
 				else
 					v.Visible = false
 				end
@@ -587,7 +585,7 @@ function Lib:CreateMain(Name)
 
 
 
-			SliderElement.Name = "SliderElement"
+			SliderElement.Name = Text
 			SliderElement.Parent = TabHolderTabElement
 			SliderElement.BackgroundColor3 = Color3.fromRGB(63, 63, 63)
 			SliderElement.Position = UDim2.new(0, 0, 0.406004131, 0)
@@ -662,7 +660,6 @@ function Lib:CreateMain(Name)
 			local oldText = Text
 
 			local Value
-			print(SliderBar.Size.X.Scale)
 
 			SliderBar.MouseButton1Down:Connect(function()
 				Value = math.floor((((tonumber(maxValue) - tonumber(minValue)) / 550) * RealSlider.AbsoluteSize.X) + tonumber(minValue)) or 0
@@ -691,7 +688,6 @@ function Lib:CreateMain(Name)
 					end
 				end)
 			end)
-
 		end
 
 		function Elements:Toggle(Text,Call)
@@ -795,7 +791,120 @@ function Lib:CreateMain(Name)
 			end)
 
 		end
+		
+		function Elements:KeyBind(Text, Type, Call)
+			local SpaceBetween = Instance.new("TextLabel")
+			SpaceBetween.Name = "SpaceBetween"
+			SpaceBetween.Parent = TabHolderTabElement
+			SpaceBetween.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			SpaceBetween.BackgroundTransparency = 1.000
+			SpaceBetween.Position = UDim2.new(0, 0, 0.111702241, 0)
+			SpaceBetween.Size = UDim2.new(1, 0, 0.0177510343, 0)
+			SpaceBetween.Font = Enum.Font.SourceSans
+			SpaceBetween.TextColor3 = Color3.fromRGB(0, 0, 0)
+			SpaceBetween.TextSize = 14.000
+			SpaceBetween.Text = ""
+			
+			local BindElement = Instance.new("Frame")
+			local ElementUiCorne = Instance.new("UICorner")
+			local BindInput = Instance.new("TextBox")
+			local UIPadding = Instance.new("UIPadding")
+			local ToggleUiCorner = Instance.new("UICorner")
+			local BindText = Instance.new("TextLabel")
+			local UIPadding_2 = Instance.new("UIPadding")
+			
+			BindElement.Name = "BindElement"
+			BindElement.Parent = TabHolderTabElement
+			BindElement.BackgroundColor3 = Color3.fromRGB(63, 63, 63)
+			BindElement.Position = UDim2.new(0.0315085128, 0, 0, 0)
+			BindElement.Size = UDim2.new(1, 0, 0.100000001, 0)
 
+			ElementUiCorne.CornerRadius = UDim.new(0, 10)
+			ElementUiCorne.Name = "ElementUiCorne"
+			ElementUiCorne.Parent = BindElement
+
+			BindInput.Name = "BindInput"
+			BindInput.Parent = BindElement
+			BindInput.Active = false
+			BindInput.AnchorPoint = Vector2.new(0, 0.5)
+			BindInput.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
+			BindInput.Position = UDim2.new(0.853710294, 0, 0.5, 0)
+			BindInput.Selectable = false
+			BindInput.Size = UDim2.new(0.122371152, 0, 0.802999973, 0)
+			BindInput.Font = Enum.Font.Gotham
+			BindInput.PlaceholderText = ""
+			BindInput.Text = ""
+			BindInput.TextColor3 = Color3.fromRGB(226, 226, 226)
+			BindInput.TextScaled = true
+			BindInput.TextSize = 14.000
+			BindInput.TextWrapped = true
+
+			UIPadding.Parent = BindInput
+			UIPadding.PaddingLeft = UDim.new(0.0199999996, 0)
+
+			ToggleUiCorner.CornerRadius = UDim.new(0, 10)
+			ToggleUiCorner.Name = "ToggleUiCorner"
+			ToggleUiCorner.Parent = BindInput
+
+			BindText.Name = "BindText"
+			BindText.Parent = BindElement
+			BindText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			BindText.BackgroundTransparency = 1.000
+			BindText.Size = UDim2.new(0.705372334, 0, 1, 0)
+			BindText.Font = Enum.Font.Gotham
+			BindText.Text = Text
+			BindText.TextColor3 = Color3.fromRGB(226, 226, 226)
+			BindText.TextScaled = true
+			BindText.TextSize = 14.000
+			BindText.TextWrapped = true
+			BindText.TextXAlignment = Enum.TextXAlignment.Left
+
+			UIPadding_2.Parent = BindText
+			UIPadding_2.PaddingLeft = UDim.new(0.0199999996, 0)
+			
+			if Type == "Normal" then
+				local keybind 
+
+				BindInput.Focused:Connect(function()
+					BindInput.Text = ""
+				end)
+
+				BindInput.Changed:Connect(function(prop)
+					BindInput:ReleaseFocus()
+					keybind = BindInput.Text
+					BindInput.Text:upper()
+				end)
+
+				mouse.KeyDown:Connect(function(Key)
+					if Key == keybind then
+						pcall(Call)
+					end
+				end)
+			end
+			
+			if Type == "Toggle" then
+				local on
+				local keybind 
+
+				BindInput.Focused:Connect(function()
+					BindInput.Text = ""
+				end)
+
+				BindInput.Changed:Connect(function(prop)
+					BindInput:ReleaseFocus()
+					keybind = BindInput.Text
+					BindInput.Text:upper()
+				end)
+
+				mouse.KeyDown:Connect(function(Key)
+					if Key == keybind then
+						on = not on
+						pcall(Call, on)
+					end
+				end)
+			end
+		end
+		
 		function Elements:DestroyButton()
 			local SpaceBetween = Instance.new("TextLabel")
 			SpaceBetween.Name = "SpaceBetween"
